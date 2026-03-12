@@ -1479,6 +1479,11 @@ export class ProjectService extends BaseService {
                                 buildMaterializationMetricQuery({
                                     sourceExplore,
                                     preAggregateDef: preAggregateDefinition,
+                                    materializationConfig: {
+                                        rowLimit:
+                                            this.lightdashConfig.preAggregates
+                                                .materializationRowLimit,
+                                    },
                                 });
                         } catch (error) {
                             materializationQueryError = getErrorMessage(error);

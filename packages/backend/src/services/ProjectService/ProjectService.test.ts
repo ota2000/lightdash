@@ -1194,6 +1194,8 @@ describe('ProjectService', () => {
                     materializationMetricQuery: {
                         metricQuery: METRIC_QUERY,
                         metricComponents: {},
+                        timeDimensionFieldId: null,
+                        resolvedRowLimit: null,
                     },
                     materializationQueryError: null,
                     refreshCron: null,

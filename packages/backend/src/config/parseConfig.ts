@@ -1106,6 +1106,7 @@ export type LightdashConfig = {
     preAggregates: {
         enabled: boolean;
         parquetEnabled: boolean;
+        materializationRowLimit: number | null;
         s3?: Omit<S3Config, 'expirationTime'>;
     };
     userImpersonation: {
@@ -2031,6 +2032,9 @@ export const parseConfig = (): LightdashConfig => {
             enabled: preAggregatesEnabled,
             parquetEnabled:
                 process.env.PRE_AGGREGATES_PARQUET_ENABLED === 'true',
+            materializationRowLimit:
+                getIntegerFromEnvironmentVariable('PRE_AGGREGATES_ROW_LIMIT') ??
+                null,
             s3: preAggregatesS3,
         },
         userImpersonation: {

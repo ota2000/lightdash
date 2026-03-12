@@ -171,12 +171,18 @@ const hasTimeDimensionReference = ({
     });
 };
 
+type MaterializationConfig = {
+    rowLimit: number | null;
+};
+
 export const buildMaterializationMetricQuery = ({
     sourceExplore,
     preAggregateDef,
+    materializationConfig,
 }: {
     sourceExplore: Explore;
     preAggregateDef: PreAggregateDef;
+    materializationConfig: MaterializationConfig;
 }): MaterializationMetricQueryPayload => {
     const metricsByReference = getMetricsByReference({
         tables: sourceExplore.tables,
@@ -203,6 +209,15 @@ export const buildMaterializationMetricQuery = ({
             ),
         ),
     );
+
+    const timeDimensionFieldId =
+        preAggregateDef.timeDimension && preAggregateDef.granularity
+            ? getDimensionFieldId({
+                  sourceExplore,
+                  preAggregateDef,
+                  dimensionReference: preAggregateDef.timeDimension,
+              })
+            : null;
 
     const metricsByFieldId = preAggregateDef.metrics.reduce<
         Map<FieldId, CompiledMetric>
@@ -303,13 +318,15 @@ export const buildMaterializationMetricQuery = ({
 
     const metricFieldIds = Array.from(selectedMetricFieldIds);
 
+    const resolvedRowLimit = materializationConfig.rowLimit ?? null;
+
     const metricQuery: MetricQuery = {
         exploreName: sourceExplore.name,
         dimensions,
         metrics: metricFieldIds,
         filters: {},
         sorts: [],
-        limit: MAX_SAFE_INTEGER,
+        limit: resolvedRowLimit ?? MAX_SAFE_INTEGER,
         tableCalculations: [],
         ...(additionalMetrics.length > 0 ? { additionalMetrics } : {}),
     };
@@ -317,5 +334,7 @@ export const buildMaterializationMetricQuery = ({
     return {
         metricQuery,
         metricComponents,
+        timeDimensionFieldId,
+        resolvedRowLimit,
     };
 };

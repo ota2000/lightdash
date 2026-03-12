@@ -2,6 +2,7 @@ import {
     DimensionType,
     FieldType,
     FilterOperator,
+    MAX_SAFE_INTEGER,
     MetricType,
     SupportedDbtAdapter,
     TimeFrames,
@@ -131,12 +132,14 @@ describe('buildMaterializationMetricQuery', () => {
         const result = buildMaterializationMetricQuery({
             sourceExplore: getSourceExplore(),
             preAggregateDef,
+            materializationConfig: { rowLimit: null },
         });
 
         expect(result.metricQuery.dimensions).toEqual(
             expect.arrayContaining(['orders_status', 'orders_order_date_day']),
         );
         expect(result.metricQuery.dimensions).toHaveLength(2);
+        expect(result.timeDimensionFieldId).toEqual('orders_order_date_day');
     });
 
     it('does not duplicate the time dimension when it is already part of the definition', () => {
@@ -151,6 +154,7 @@ describe('buildMaterializationMetricQuery', () => {
         const result = buildMaterializationMetricQuery({
             sourceExplore: getSourceExplore(),
             preAggregateDef,
+            materializationConfig: { rowLimit: null },
         });
 
         expect(
@@ -159,6 +163,7 @@ describe('buildMaterializationMetricQuery', () => {
             ),
         ).toHaveLength(1);
         expect(result.metricQuery.dimensions).toHaveLength(2);
+        expect(result.timeDimensionFieldId).toEqual('orders_order_date_day');
     });
 
     it.each(['order_count', 'orders.order_count'])(
@@ -173,6 +178,7 @@ describe('buildMaterializationMetricQuery', () => {
             const result = buildMaterializationMetricQuery({
                 sourceExplore: getSourceExplore(),
                 preAggregateDef,
+                materializationConfig: { rowLimit: null },
             });
 
             expect(result.metricQuery.metrics).toEqual(['orders_order_count']);
@@ -184,6 +190,7 @@ describe('buildMaterializationMetricQuery', () => {
                     },
                 ],
             });
+            expect(result.timeDimensionFieldId).toBeNull();
         },
     );
 
@@ -197,6 +204,7 @@ describe('buildMaterializationMetricQuery', () => {
         const result = buildMaterializationMetricQuery({
             sourceExplore: getSourceExplore(),
             preAggregateDef,
+            materializationConfig: { rowLimit: null },
         });
 
         expect(result.metricQuery.metrics).toEqual([
@@ -251,6 +259,7 @@ describe('buildMaterializationMetricQuery', () => {
                 },
             ],
         });
+        expect(result.timeDimensionFieldId).toBeNull();
     });
 
     it('throws when generated average metric component field IDs collide with selected metrics', () => {
@@ -262,6 +271,7 @@ describe('buildMaterializationMetricQuery', () => {
                     dimensions: ['status'],
                     metrics: ['avg_order_amount', 'avg_order_amount__sum'],
                 },
+                materializationConfig: { rowLimit: null },
             }),
         ).toThrow(
             'Pre-aggregate "orders_rollup" generates duplicate materialization metric field ID "orders_avg_order_amount__sum"',

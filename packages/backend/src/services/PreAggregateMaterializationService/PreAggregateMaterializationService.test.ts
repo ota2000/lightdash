@@ -95,6 +95,8 @@ describe('PreAggregateMaterializationService', () => {
                     tableCalculations: [],
                 },
                 metricComponents: {},
+                timeDimensionFieldId: null,
+                resolvedRowLimit: null,
             },
             materializationQueryError: null,
         });
@@ -166,6 +168,8 @@ describe('PreAggregateMaterializationService', () => {
                     tableCalculations: [],
                 },
                 metricComponents: {},
+                timeDimensionFieldId: null,
+                resolvedRowLimit: null,
             },
             materializationQueryError: null,
         });

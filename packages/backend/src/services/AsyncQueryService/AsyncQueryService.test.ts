@@ -775,6 +775,7 @@ describe('AsyncQueryService', () => {
                 preAggregates: {
                     enabled: false,
                     parquetEnabled: false,
+                    materializationRowLimit: null,
                 },
             });
             (service as AnyType).preAggregationDuckDbClient = {

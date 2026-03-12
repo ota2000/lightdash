@@ -13,6 +13,8 @@ export type MaterializationMetricComponent = {
 export type MaterializationMetricQueryPayload = {
     metricQuery: MetricQuery;
     metricComponents: Record<string, MaterializationMetricComponent[]>;
+    timeDimensionFieldId: string | null;
+    resolvedRowLimit: number | null;
 };
 
 export type PreAggregateMaterializationStatus =
@@ -154,20 +156,41 @@ export const preAggregateMissReasonLabels: Record<
 
 export const PRE_AGGREGATE_ROW_COUNT_WARNING_THRESHOLD = 1_000_000;
 
-export type PreAggregateMaterializationWarning = {
-    type: 'row_count_exceeded';
-    message: string;
-    rowCount: number;
-    threshold: number;
-};
+export type PreAggregateMaterializationWarning =
+    | {
+          type: 'row_count_exceeded';
+          message: string;
+          rowCount: number;
+          threshold: number;
+      }
+    | {
+          type: 'row_limit_applied';
+          message: string;
+          rowLimit: number;
+      };
 
 export const computePreAggregateWarnings = (
     materialization: {
         rowCount: number | null;
     } | null,
-    rowCountThreshold: number = PRE_AGGREGATE_ROW_COUNT_WARNING_THRESHOLD,
+    options: {
+        rowCountThreshold?: number;
+        materializationRowLimit?: number | null;
+    } = {},
 ): PreAggregateMaterializationWarning[] => {
+    const {
+        rowCountThreshold = PRE_AGGREGATE_ROW_COUNT_WARNING_THRESHOLD,
+        materializationRowLimit = null,
+    } = options;
     const warnings: PreAggregateMaterializationWarning[] = [];
+
+    if (materializationRowLimit != null) {
+        warnings.push({
+            type: 'row_limit_applied',
+            message: `This pre-aggregate is limited to ${materializationRowLimit.toLocaleString()} rows. Results may be incomplete if the underlying data exceeds this limit.`,
+            rowLimit: materializationRowLimit,
+        });
+    }
 
     const rowCount = materialization?.rowCount;
     if (rowCount != null && rowCount > rowCountThreshold) {
@@ -193,6 +216,7 @@ export type PreAggregateMaterializationSummary = {
     granularity: TimeFrames | null;
     refreshCron: string | null;
     definitionError: string | null;
+    resolvedRowLimit: number | null;
     warnings: PreAggregateMaterializationWarning[];
     materialization: {
         materializationUuid: string;
