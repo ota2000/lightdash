@@ -16,11 +16,7 @@ import {
     SuccessResponse,
 } from '@tsoa/runtime';
 import express from 'express';
-import {
-    allowOauthAuthentication,
-    isAuthenticated,
-    unauthorisedInDemo,
-} from './authentication';
+import { isAuthenticated, unauthorisedInDemo } from './authentication';
 import { BaseController } from './baseController';
 
 /** HOW it works
@@ -42,11 +38,7 @@ export class GithubInstallController extends BaseController {
      * @param redirect The url to redirect to after installation
      * @param req express request
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        isAuthenticated,
-        unauthorisedInDemo,
-    ])
+    @Middlewares([isAuthenticated, unauthorisedInDemo])
     @SuccessResponse('302', 'Not found')
     @Get('/install')
     @OperationId('installGithubAppForOrganization')
@@ -70,11 +62,7 @@ export class GithubInstallController extends BaseController {
      * Get GitHub App configuration for the organization
      * @summary Get GitHub App configuration
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        isAuthenticated,
-        unauthorisedInDemo,
-    ])
+    @Middlewares([isAuthenticated, unauthorisedInDemo])
     @SuccessResponse('200')
     @Get('/config')
     @OperationId('configurationGithubAppForOrganization')
@@ -134,11 +122,7 @@ export class GithubInstallController extends BaseController {
      * Uninstall the GitHub App from the organization
      * @summary Uninstall GitHub App
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        isAuthenticated,
-        unauthorisedInDemo,
-    ])
+    @Middlewares([isAuthenticated, unauthorisedInDemo])
     @Delete('/uninstall')
     @OperationId('uninstallGithubAppForOrganization')
     async uninstallGithubAppForOrganization(
@@ -159,11 +143,7 @@ export class GithubInstallController extends BaseController {
      * List GitHub repositories accessible via the installed app
      * @summary List GitHub repositories
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        isAuthenticated,
-        unauthorisedInDemo,
-    ])
+    @Middlewares([isAuthenticated, unauthorisedInDemo])
     @SuccessResponse('200')
     @Get('/repos/list')
     @OperationId('getGithubListRepositories')
@@ -185,11 +165,7 @@ export class GithubInstallController extends BaseController {
      * Create a new GitHub repository via the installed app
      * @summary Create GitHub repository
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        isAuthenticated,
-        unauthorisedInDemo,
-    ])
+    @Middlewares([isAuthenticated, unauthorisedInDemo])
     @SuccessResponse('201', 'Created')
     @Post('/repos')
     @OperationId('createGithubRepository')

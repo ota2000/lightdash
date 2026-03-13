@@ -15,7 +15,7 @@ import {
     Tags,
 } from '@tsoa/runtime';
 import express from 'express';
-import { allowOauthAuthentication, isAuthenticated } from './authentication';
+import { isAuthenticated } from './authentication';
 import { BaseController } from './baseController';
 
 @Route('/api/v1/impersonation')
@@ -28,7 +28,7 @@ export class ImpersonationController extends BaseController {
      * @param req express request
      * @param body
      */
-    @Middlewares([allowOauthAuthentication, isAuthenticated])
+    @Middlewares([isAuthenticated])
     @Post('/start')
     @OperationId('StartImpersonation')
     async startImpersonation(
@@ -56,7 +56,7 @@ export class ImpersonationController extends BaseController {
      * @summary Stop impersonation
      * @param req express request
      */
-    @Middlewares([allowOauthAuthentication, isAuthenticated])
+    @Middlewares([isAuthenticated])
     @Post('/stop')
     @OperationId('StopImpersonation')
     async stopImpersonation(

@@ -15,11 +15,7 @@ import {
     Tags,
 } from '@tsoa/runtime';
 import express from 'express';
-import {
-    allowApiKeyAuthentication,
-    allowOauthAuthentication,
-    isAuthenticated,
-} from './authentication';
+import { allowApiKeyAuthentication, isAuthenticated } from './authentication';
 import { BaseController } from './baseController';
 
 @Route('/api/v1/csv')
@@ -32,11 +28,7 @@ export class CsvController extends BaseController {
      * @param jobId the jobId for the CSV
      * @param req express request
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Get('{jobId}')
     @OperationId('getCsvUrl')

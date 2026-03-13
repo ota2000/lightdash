@@ -25,7 +25,6 @@ import express from 'express';
 import { lightdashConfig } from '../config/lightdashConfig';
 import {
     allowApiKeyAuthentication,
-    allowOauthAuthentication,
     isAuthenticated,
     unauthorisedInDemo,
 } from './authentication';
@@ -40,13 +39,11 @@ export class GitIntegrationController extends BaseController {
      * @summary Create PR for custom metrics
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
     ])
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
@@ -85,7 +82,6 @@ export class GitIntegrationController extends BaseController {
      * @summary Create PR for custom dimensions
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
@@ -123,11 +119,7 @@ export class GitIntegrationController extends BaseController {
      * List git branches for the project repository
      * @summary List git branches
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        isAuthenticated,
-        unauthorisedInDemo,
-    ])
+    @Middlewares([isAuthenticated, unauthorisedInDemo])
     @SuccessResponse('200')
     @Get('/branches')
     @Hidden()
@@ -154,7 +146,6 @@ export class GitIntegrationController extends BaseController {
      * @summary Get explore file
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
@@ -184,7 +175,6 @@ export class GitIntegrationController extends BaseController {
      * @summary Get explore file path
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
@@ -214,7 +204,6 @@ export class GitIntegrationController extends BaseController {
      * @summary Create file PR
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,

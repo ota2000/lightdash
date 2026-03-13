@@ -22,7 +22,6 @@ import {
 import express from 'express';
 import {
     allowApiKeyAuthentication,
-    allowOauthAuthentication,
     isAuthenticated,
     unauthorisedInDemo,
 } from './authentication';
@@ -37,7 +36,6 @@ export class SpotlightController extends BaseController {
      * @summary Update spotlight table config
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
@@ -65,11 +63,7 @@ export class SpotlightController extends BaseController {
      * Get spotlight table configuration
      * @summary Get spotlight table config
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Get('/table/config')
     @OperationId('getSpotlightTableConfig')
@@ -95,7 +89,6 @@ export class SpotlightController extends BaseController {
      * @summary Reset spotlight table config
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,

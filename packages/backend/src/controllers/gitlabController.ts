@@ -10,11 +10,7 @@ import {
     SuccessResponse,
 } from '@tsoa/runtime';
 import express from 'express';
-import {
-    allowOauthAuthentication,
-    isAuthenticated,
-    unauthorisedInDemo,
-} from './authentication';
+import { isAuthenticated, unauthorisedInDemo } from './authentication';
 import { BaseController } from './baseController';
 
 /** GitLab OAuth Integration Controller
@@ -36,11 +32,7 @@ export class GitlabController extends BaseController {
      * @param req express request
      * @param gitlab_instance_url Custom GitLab instance URL (optional, defaults to gitlab.com)
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        isAuthenticated,
-        unauthorisedInDemo,
-    ])
+    @Middlewares([isAuthenticated, unauthorisedInDemo])
     @SuccessResponse('302', 'Redirect to GitLab OAuth')
     @Get('/install')
     @OperationId('installGitlabIntegration')
@@ -103,11 +95,7 @@ export class GitlabController extends BaseController {
      * Uninstall GitLab integration from the organization
      * @summary Uninstall GitLab integration
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        isAuthenticated,
-        unauthorisedInDemo,
-    ])
+    @Middlewares([isAuthenticated, unauthorisedInDemo])
     @Delete('/uninstall')
     @OperationId('uninstallGitlabIntegration')
     async uninstallGitlabIntegration(
@@ -128,11 +116,7 @@ export class GitlabController extends BaseController {
      * List GitLab projects accessible via the integration
      * @summary List GitLab projects
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        isAuthenticated,
-        unauthorisedInDemo,
-    ])
+    @Middlewares([isAuthenticated, unauthorisedInDemo])
     @SuccessResponse('200')
     @Get('/repos/list')
     @OperationId('getGitlabProjects')

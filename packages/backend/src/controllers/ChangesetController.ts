@@ -17,11 +17,7 @@ import {
     Tags,
 } from '@tsoa/runtime';
 import express from 'express';
-import {
-    allowApiKeyAuthentication,
-    allowOauthAuthentication,
-    isAuthenticated,
-} from './authentication';
+import { allowApiKeyAuthentication, isAuthenticated } from './authentication';
 import { BaseController } from './baseController';
 
 @Route('/api/v1/projects/{projectUuid}/changesets')
@@ -32,11 +28,7 @@ export class ChangesetController extends BaseController {
      * Get active changeset for a project
      * @summary List changesets
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Get()
     @OperationId('listActiveChangesetWithChanges')
@@ -62,11 +54,7 @@ export class ChangesetController extends BaseController {
      * Get a specific change by UUID
      * @summary Get change
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Get('/changes/{changeUuid}')
     @OperationId('getChange')
@@ -90,11 +78,7 @@ export class ChangesetController extends BaseController {
      * Revert a specific change
      * @summary Revert change
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Post('/changes/{changeUuid}/revert')
     @OperationId('revertChange')
@@ -117,11 +101,7 @@ export class ChangesetController extends BaseController {
      * Revert all changes in the active changeset
      * @summary Revert all changes
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Post('/revert-all')
     @OperationId('revertAllChanges')

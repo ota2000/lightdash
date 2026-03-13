@@ -31,7 +31,6 @@ import path from 'path';
 import { Readable } from 'stream';
 import {
     allowApiKeyAuthentication,
-    allowOauthAuthentication,
     isAuthenticated,
     unauthorisedInDemo,
 } from './authentication';
@@ -46,11 +45,7 @@ export class SlackController extends BaseController {
      * @summary Get Slack channels
      * @param req express request
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Get('/channels')
     @OperationId('getSlackChannels')
@@ -88,11 +83,7 @@ export class SlackController extends BaseController {
      * @param req express request
      * @param channelId Slack channel ID (e.g., C01234567)
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Get('/channels/{channelId}')
     @OperationId('getSlackChannelById')
@@ -115,7 +106,6 @@ export class SlackController extends BaseController {
      * @param req express request
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
@@ -143,7 +133,7 @@ export class SlackController extends BaseController {
      * @summary Check Slack OpenID link status
      * @param req express request
      */
-    @Middlewares([allowOauthAuthentication, isAuthenticated])
+    @Middlewares([isAuthenticated])
     @Get('/is-authenticated')
     @OperationId('IsSlackOpenIdLinked')
     async isSlackOpenIdLinked(
@@ -169,11 +159,7 @@ export class SlackController extends BaseController {
      * Get Slack installation details for the organization
      * @summary Get Slack installation
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        isAuthenticated,
-        unauthorisedInDemo,
-    ])
+    @Middlewares([isAuthenticated, unauthorisedInDemo])
     @SuccessResponse('200', 'Success')
     @Get('/')
     @OperationId('getSlackInstallation')
@@ -219,11 +205,7 @@ export class SlackController extends BaseController {
      * Delete the Slack installation for the organization
      * @summary Delete Slack installation
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        isAuthenticated,
-        unauthorisedInDemo,
-    ])
+    @Middlewares([isAuthenticated, unauthorisedInDemo])
     @SuccessResponse('200', 'Success')
     @Delete('/')
     @OperationId('deleteSlackInstall')
@@ -244,11 +226,7 @@ export class SlackController extends BaseController {
      * Start the Slack installation flow
      * @summary Install Slack
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        isAuthenticated,
-        unauthorisedInDemo,
-    ])
+    @Middlewares([isAuthenticated, unauthorisedInDemo])
     @SuccessResponse('200', 'Success')
     @Get('/install')
     @OperationId('installSlack')

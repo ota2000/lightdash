@@ -44,11 +44,7 @@ import {
 } from '@tsoa/runtime';
 import express from 'express';
 import { getContextFromHeader } from '../../analytics/LightdashAnalytics';
-import {
-    allowApiKeyAuthentication,
-    allowOauthAuthentication,
-    isAuthenticated,
-} from '../authentication';
+import { allowApiKeyAuthentication, isAuthenticated } from '../authentication';
 import { BaseController } from '../baseController';
 
 export type ApiGetAsyncQueryResultsResponse = {
@@ -64,11 +60,7 @@ export class QueryController extends BaseController {
      * Retrieves paginated results from a previously executed async query using its UUID
      * @summary Get results
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Get('/{queryUuid}')
     @OperationId('getAsyncQueryResults')
@@ -108,11 +100,7 @@ export class QueryController extends BaseController {
      * Cancels a running async query and discards any partial results
      * @summary Cancel query
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Post('/{queryUuid}/cancel')
     @OperationId('cancelAsyncQuery')
@@ -140,11 +128,7 @@ export class QueryController extends BaseController {
      * Executes a metric query asynchronously against your data warehouse using dimensions, metrics, filters, and sorts
      * @summary Execute metric query
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Post('/metric-query')
     @OperationId('executeAsyncMetricQuery')
@@ -196,11 +180,7 @@ export class QueryController extends BaseController {
      * Executes a saved chart query asynchronously with optional parameter overrides
      * @summary Execute saved chart
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Post('/chart')
     @OperationId('executeAsyncSavedChartQuery')
@@ -245,11 +225,7 @@ export class QueryController extends BaseController {
      * Executes a chart within a dashboard context asynchronously with inherited dashboard filters
      * @summary Execute dashboard chart
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Post('/dashboard-chart')
     @OperationId('executeAsyncDashboardChartQuery')
@@ -296,11 +272,7 @@ export class QueryController extends BaseController {
      * Executes a query to retrieve underlying raw data for drilling down into aggregated values
      * @summary Execute underlying data
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Post('/underlying-data')
     @OperationId('executeAsyncUnderlyingDataQuery')
@@ -341,11 +313,7 @@ export class QueryController extends BaseController {
      * Executes a raw SQL query asynchronously against your data warehouse for custom queries
      * @summary Execute SQL query
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Post('/sql')
     @OperationId('executeAsyncSqlQuery')
@@ -381,11 +349,7 @@ export class QueryController extends BaseController {
      * Executes a saved SQL chart query asynchronously with optional chart configurations
      * @summary Execute SQL chart
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Post('/sql-chart')
     @OperationId('executeAsyncSqlChartQuery')
@@ -422,11 +386,7 @@ export class QueryController extends BaseController {
      * Executes a SQL chart within a dashboard context asynchronously with inherited filters
      * @summary Execute dashboard SQL chart
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Post('/dashboard-sql-chart')
     @OperationId('executeAsyncDashboardSqlChartQuery')
@@ -467,11 +427,7 @@ export class QueryController extends BaseController {
      * Streams query results directly from storage as newline-delimited JSON for large result sets
      * @summary Stream results
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Get('/{queryUuid}/results')
     @Hidden() // This endpoint is temporary while we migrate SQL runner to use pagination. Should not be part of API docs.
@@ -508,11 +464,7 @@ export class QueryController extends BaseController {
      * Downloads query results in various formats with custom formatting options
      * @summary Download results
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Post('/{queryUuid}/download')
     @OperationId('downloadResults')
@@ -555,11 +507,7 @@ export class QueryController extends BaseController {
      * Downloads query results in various formats with custom formatting options
      * @summary Download results
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Post('/{queryUuid}/schedule-download')
     @OperationId('scheduleDownloadResults')

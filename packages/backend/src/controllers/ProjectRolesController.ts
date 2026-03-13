@@ -27,7 +27,6 @@ import express from 'express';
 import { RolesService } from '../services/RolesService/RolesService';
 import {
     allowApiKeyAuthentication,
-    allowOauthAuthentication,
     isAuthenticated,
     unauthorisedInDemo,
 } from './authentication';
@@ -64,11 +63,7 @@ export class ProjectRolesController extends BaseController {
      * List project role assignments
      * @summary List project role assignments
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Get('/assignments')
     @OperationId('GetProjectRoleAssignments')
@@ -94,7 +89,6 @@ export class ProjectRolesController extends BaseController {
      * @summary Assign project role to user
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
@@ -128,7 +122,6 @@ export class ProjectRolesController extends BaseController {
      * @summary Assign project role to group
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
@@ -162,7 +155,6 @@ export class ProjectRolesController extends BaseController {
      * @summary Update project group role
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
@@ -197,7 +189,6 @@ export class ProjectRolesController extends BaseController {
      * @summary Remove project role from user
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
@@ -229,7 +220,6 @@ export class ProjectRolesController extends BaseController {
      * @summary Remove project role from group
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,

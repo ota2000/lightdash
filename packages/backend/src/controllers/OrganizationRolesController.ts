@@ -23,7 +23,6 @@ import {
 import express from 'express';
 import {
     allowApiKeyAuthentication,
-    allowOauthAuthentication,
     isAuthenticated,
     unauthorisedInDemo,
 } from './authentication';
@@ -56,11 +55,7 @@ export class OrganizationRolesController extends BaseController {
      * Get roles for organization
      * @summary Get organization roles
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Get()
     @OperationId('GetOrganizationRoles')
@@ -89,11 +84,7 @@ export class OrganizationRolesController extends BaseController {
      * List organization role assignments (system roles only)
      * @summary List organization role assignments
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Get('/assignments')
     @OperationId('GetOrganizationRoleAssignments')
@@ -118,11 +109,7 @@ export class OrganizationRolesController extends BaseController {
      * Get custom role by uuid
      * @summary Get custom role
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Get('/{roleUuid}')
     @OperationId('GetCustomRoleByUuid')
@@ -148,7 +135,6 @@ export class OrganizationRolesController extends BaseController {
      * @summary Assign organization role to user
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
@@ -182,7 +168,6 @@ export class OrganizationRolesController extends BaseController {
      * @summary Duplicate role
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,

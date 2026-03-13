@@ -40,7 +40,6 @@ import {
 } from '../utils/inputValidation';
 import {
     allowApiKeyAuthentication,
-    allowOauthAuthentication,
     isAuthenticated,
     unauthorisedInDemo,
 } from './authentication';
@@ -71,11 +70,7 @@ export class SchedulerController extends BaseController {
      * @param createdByUserUuids filter by creator user UUIDs (comma-separated)
      * @param destinations filter by destination types (comma-separated: email, slack, msteams, googlechat)
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Get('/{projectUuid}/logs')
     @OperationId('getSchedulerLogs')
@@ -140,11 +135,7 @@ export class SchedulerController extends BaseController {
      * @param resourceType filter by resource type (chart or dashboard)
      * @param resourceUuids filter by resource UUIDs (comma-separated)
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Get('/{projectUuid}/runs')
     @OperationId('getSchedulerRuns')
@@ -215,11 +206,7 @@ export class SchedulerController extends BaseController {
      * @param req express request
      * @param runId The ID of the run (parent job ID)
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Get('/runs/{runId}/logs')
     @OperationId('getRunLogs')
@@ -252,11 +239,7 @@ export class SchedulerController extends BaseController {
      * @param destinations filter by destination types (comma-separated: email, slack, msteams, googlechat)
      * @param includeLatestRun include latest run information for each scheduler
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Get('user-schedulers')
     @OperationId('listUserSchedulers')
@@ -331,11 +314,7 @@ export class SchedulerController extends BaseController {
      * @param resourceUuids filter by resource UUIDs (comma-separated)
      * @param destinations filter by destination types (comma-separated: email, slack, msteams, googlechat)
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Get('/{projectUuid}/list')
     @OperationId('ListSchedulers')
@@ -404,11 +383,7 @@ export class SchedulerController extends BaseController {
      * @param schedulerUuid The uuid of the scheduler to update
      * @param req express request
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Get('{schedulerUuid}')
     @OperationId('getScheduler')
@@ -433,7 +408,6 @@ export class SchedulerController extends BaseController {
      * @param body the new scheduler data
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
@@ -463,7 +437,6 @@ export class SchedulerController extends BaseController {
      * @param body the enabled flag
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
@@ -493,7 +466,6 @@ export class SchedulerController extends BaseController {
      * @param body the scheduler UUIDs and new owner UUID
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
@@ -531,7 +503,6 @@ export class SchedulerController extends BaseController {
      * @param req express request
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
@@ -562,11 +533,7 @@ export class SchedulerController extends BaseController {
      * @param schedulerUuid The uuid of the scheduler to update
      * @param req express request
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Get('{schedulerUuid}/jobs')
     @OperationId('getScheduledJobs')
@@ -590,11 +557,7 @@ export class SchedulerController extends BaseController {
      * @param jobId the jobId for the status to check
      * @param req express request
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Get('job/{jobId}/status')
     @OperationId('getSchedulerJobStatus')
@@ -622,7 +585,6 @@ export class SchedulerController extends BaseController {
      * @param body the create scheduler data
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
@@ -655,7 +617,6 @@ export class SchedulerController extends BaseController {
      * @param req express request
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,

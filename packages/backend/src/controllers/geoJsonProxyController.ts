@@ -9,11 +9,7 @@ import {
     SuccessResponse,
     Tags,
 } from '@tsoa/runtime';
-import {
-    allowApiKeyAuthentication,
-    allowOauthAuthentication,
-    isAuthenticated,
-} from './authentication';
+import { allowApiKeyAuthentication, isAuthenticated } from './authentication';
 import { BaseController } from './baseController';
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
@@ -139,11 +135,7 @@ export class GeoJsonProxyController extends BaseController {
      * @param url the URL of the GeoJSON file
      * @summary Proxy GeoJSON
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Get()
     @OperationId('getGeoJson')

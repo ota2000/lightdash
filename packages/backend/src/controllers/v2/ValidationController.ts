@@ -20,7 +20,6 @@ import {
 import express from 'express';
 import {
     allowApiKeyAuthentication,
-    allowOauthAuthentication,
     isAuthenticated,
 } from '../authentication/middlewares';
 import { BaseController } from '../baseController';
@@ -44,11 +43,7 @@ export class ValidationControllerV2 extends BaseController {
      * @param includeChartConfigWarnings whether to include chart configuration warnings
      * @param fromSettings boolean for analytics tracking
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Get('/')
     @OperationId('ListValidationResults')
@@ -113,11 +108,7 @@ export class ValidationControllerV2 extends BaseController {
      * @param validationId the validation result ID
      * @param req express request
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Get('{validationId}')
     @OperationId('GetValidationResult')

@@ -49,7 +49,6 @@ import express from 'express';
 import { CatalogSearchContext } from '../models/CatalogModel/CatalogModel';
 import {
     allowApiKeyAuthentication,
-    allowOauthAuthentication,
     isAuthenticated,
     unauthorisedInDemo,
 } from './authentication';
@@ -68,11 +67,7 @@ export class CatalogController extends BaseController {
      * - type: 'table' | 'field'
      * @returns ApiCatalogResults
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Get('/')
     @OperationId('getCatalog')
@@ -114,11 +109,7 @@ export class CatalogController extends BaseController {
      * @param page Page number (1-indexed)
      * @param pageSize Number of trees per page
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Get('/metrics/trees')
     @OperationId('getMetricsTrees')
@@ -149,11 +140,7 @@ export class CatalogController extends BaseController {
      * @param projectUuid
      * @param metricsTreeUuidOrSlug
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Get('/metrics/trees/{metricsTreeUuidOrSlug}')
     @OperationId('getMetricsTreeDetails')
@@ -190,7 +177,6 @@ export class CatalogController extends BaseController {
      * @param body.edges List of edges between nodes, deduplicated against existing edges
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
@@ -223,7 +209,6 @@ export class CatalogController extends BaseController {
      * @param body Updated tree data including nodes and edges
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
@@ -256,7 +241,6 @@ export class CatalogController extends BaseController {
      * @param metricsTreeUuid
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
@@ -288,7 +272,6 @@ export class CatalogController extends BaseController {
      * @param metricsTreeUuid
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
@@ -320,7 +303,6 @@ export class CatalogController extends BaseController {
      * @param metricsTreeUuid
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
@@ -352,7 +334,6 @@ export class CatalogController extends BaseController {
      * @param metricsTreeUuid
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
@@ -384,11 +365,7 @@ export class CatalogController extends BaseController {
      * @param table Table name to get metadata for
      * @returns ApiCatalogMetadataResults
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Get('/{table}/metadata')
     @OperationId('getMetadata')
@@ -415,11 +392,7 @@ export class CatalogController extends BaseController {
      * @param table Table name to get analytics for
      * @returns ApiCatalogAnalyticsResults
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Get('/{table}/analytics')
     @OperationId('getAnalytics')
@@ -447,11 +420,7 @@ export class CatalogController extends BaseController {
      * @param table Table where this field belongs
      * @returns ApiCatalogAnalyticsResults
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Get('/{table}/analytics/{field}')
     @OperationId('getAnalyticsField')
@@ -488,11 +457,7 @@ export class CatalogController extends BaseController {
      * - pageSize: number
      * @returns ApiMetricsCatalog
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Get('/metrics')
     @OperationId('getMetricsCatalog')
@@ -553,11 +518,7 @@ export class CatalogController extends BaseController {
      * Get all edges in the metrics tree for a project
      * @summary Get all metrics tree edges
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Get('/metrics/tree/edges')
     @OperationId('getAllMetricsTreeEdges')
@@ -585,11 +546,7 @@ export class CatalogController extends BaseController {
      * @param metricName
      * @returns ApiGetMetricPeek
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Get('/metrics/{tableName}/{metricName}')
     @OperationId('getMetric')
@@ -617,11 +574,7 @@ export class CatalogController extends BaseController {
      * @param projectUuid
      * @returns ApiMetricsWithAssociatedTimeDimensionResponse
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Get('/metrics-with-time-dimensions')
     @OperationId('getMetricsWithTimeDimensions')
@@ -654,11 +607,7 @@ export class CatalogController extends BaseController {
      * @param tableName
      * @returns ApiFilterDimensionsResponse
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Get('/{tableName}/filter-dimensions')
     @OperationId('getFilterDimensions')
@@ -691,11 +640,7 @@ export class CatalogController extends BaseController {
      * @param tableName
      * @returns ApiSegmentDimensionsResponse
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Get('/{tableName}/segment-dimensions')
     @OperationId('getSegmentDimensions')
@@ -726,7 +671,6 @@ export class CatalogController extends BaseController {
      * @summary Add category to catalog item
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
@@ -759,7 +703,6 @@ export class CatalogController extends BaseController {
      * @summary Remove category from catalog item
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
@@ -789,7 +732,6 @@ export class CatalogController extends BaseController {
      * @summary Update catalog item icon
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
@@ -824,11 +766,7 @@ export class CatalogController extends BaseController {
      * @summary Get metrics tree
      * @deprecated Use POST /metrics/tree instead for large metric lists
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Get('/metrics/tree')
     @OperationId('getMetricsTreeLegacy')
@@ -853,11 +791,7 @@ export class CatalogController extends BaseController {
      * Get the metrics tree structure
      * @summary Get metrics tree
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Post('/metrics/tree')
     @OperationId('getMetricsTree')
@@ -883,7 +817,6 @@ export class CatalogController extends BaseController {
      * @summary Create metrics tree edge
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
@@ -912,7 +845,6 @@ export class CatalogController extends BaseController {
      * @summary Delete metrics tree edge
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
@@ -948,11 +880,7 @@ export class CatalogController extends BaseController {
      * @param projectUuid
      * @returns boolean indicating if there are metrics
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Get('/metrics/has')
     @OperationId('hasMetricsInCatalog')
@@ -976,11 +904,7 @@ export class CatalogController extends BaseController {
      * Get distinct metric owners for filter dropdown
      * @summary List metric owners
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Get('/metrics/owners')
     @OperationId('getMetricOwners')

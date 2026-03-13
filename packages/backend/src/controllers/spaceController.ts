@@ -26,7 +26,6 @@ import {
 import express from 'express';
 import {
     allowApiKeyAuthentication,
-    allowOauthAuthentication,
     isAuthenticated,
     unauthorisedInDemo,
 } from './authentication';
@@ -43,11 +42,7 @@ export class SpaceController extends BaseController {
      * @param spaceUuid The uuid of the space to get
      * @param req
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Get('{spaceUuid}')
     @OperationId('GetSpace')
@@ -73,11 +68,7 @@ export class SpaceController extends BaseController {
      * @param spaceUuid The uuid of the space to check
      * @param req
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Get('{spaceUuid}/delete-impact')
     @OperationId('GetSpaceDeleteImpact')
@@ -103,7 +94,6 @@ export class SpaceController extends BaseController {
      * @param req
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
@@ -135,7 +125,6 @@ export class SpaceController extends BaseController {
      * @param req
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
@@ -165,7 +154,6 @@ export class SpaceController extends BaseController {
      * @param req
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
@@ -199,7 +187,6 @@ export class SpaceController extends BaseController {
      * @param req
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
@@ -238,7 +225,6 @@ export class SpaceController extends BaseController {
      * @param req
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
@@ -273,7 +259,6 @@ export class SpaceController extends BaseController {
      * @param req
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
@@ -312,7 +297,6 @@ export class SpaceController extends BaseController {
      * @param req
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,

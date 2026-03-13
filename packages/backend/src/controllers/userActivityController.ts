@@ -29,7 +29,6 @@ import {
 import express from 'express';
 import {
     allowApiKeyAuthentication,
-    allowOauthAuthentication,
     isAuthenticated,
     unauthorisedInDemo,
 } from './authentication';
@@ -44,7 +43,6 @@ export class UserActivityController extends BaseController {
      * @summary Get user activity
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
@@ -71,7 +69,6 @@ export class UserActivityController extends BaseController {
      * @summary Download user activity CSV
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
@@ -98,7 +95,6 @@ export class UserActivityController extends BaseController {
      * @summary Get unused content
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,

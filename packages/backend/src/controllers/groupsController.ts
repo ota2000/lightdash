@@ -31,7 +31,6 @@ import {
 } from '../database/entities/projectGroupAccess';
 import {
     allowApiKeyAuthentication,
-    allowOauthAuthentication,
     isAuthenticated,
     unauthorisedInDemo,
 } from './authentication';
@@ -48,11 +47,7 @@ export class GroupsController extends BaseController {
      * @param includeMembers number of members to include
      * @param offset offset of members to include
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @Get('{groupUuid}')
     @OperationId('getGroup')
     async getGroup(
@@ -76,7 +71,6 @@ export class GroupsController extends BaseController {
      * @param unique id of the group to delete
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
@@ -102,7 +96,6 @@ export class GroupsController extends BaseController {
      * @param userUuid the UUID for the user to add to the group
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
@@ -134,7 +127,6 @@ export class GroupsController extends BaseController {
      * @param userUuid the UUID for the user to remove from the group
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
@@ -164,11 +156,7 @@ export class GroupsController extends BaseController {
      * @summary Get group members
      * @param groupUuid the UUID for the group to view the members of
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @Get('{groupUuid}/members')
     @OperationId('getGroupMembers')
     async getGroupMembers(
@@ -189,7 +177,6 @@ export class GroupsController extends BaseController {
      * @summary Update group
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
@@ -218,7 +205,6 @@ export class GroupsController extends BaseController {
      * @deprecated Use ProjectRoleAssignments instead
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
@@ -252,7 +238,6 @@ export class GroupsController extends BaseController {
      *  @deprecated Use ProjectRoleAssignments instead
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
@@ -287,7 +272,6 @@ export class GroupsController extends BaseController {
      * @deprecated Use ProjectRoleAssignments instead
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,

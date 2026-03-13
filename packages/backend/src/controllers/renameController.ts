@@ -27,7 +27,6 @@ import {
 import express from 'express';
 import {
     allowApiKeyAuthentication,
-    allowOauthAuthentication,
     isAuthenticated,
     unauthorisedInDemo,
 } from './authentication';
@@ -42,7 +41,6 @@ export class RenameController extends BaseController {
      * @summary Rename resources
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
@@ -80,7 +78,6 @@ export class RenameController extends BaseController {
      * @summary Rename chart
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
@@ -118,7 +115,6 @@ export class RenameController extends BaseController {
      * @summary Get chart fields for rename
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
@@ -151,7 +147,6 @@ export class RenameController extends BaseController {
      * @summary Rename dashboard filter
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
@@ -191,7 +186,6 @@ export class RenameController extends BaseController {
      * @summary Get dashboard fields for rename
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,

@@ -41,7 +41,6 @@ import express from 'express';
 import { UserModel } from '../models/UserModel';
 import {
     allowApiKeyAuthentication,
-    allowOauthAuthentication,
     isAuthenticated,
     unauthorisedInDemo,
 } from './authentication';
@@ -56,11 +55,7 @@ export class UserController extends BaseController {
      * @summary Get authenticated user
      * @param req express request
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @Get('/')
     @OperationId('GetAuthenticatedUser')
     async getAuthenticatedUser(
@@ -131,11 +126,7 @@ export class UserController extends BaseController {
      * @summary Create email one-time passcode
      * @param req express request
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        isAuthenticated,
-        unauthorisedInDemo,
-    ])
+    @Middlewares([isAuthenticated, unauthorisedInDemo])
     @Put('/me/email/otp')
     @OperationId('CreateEmailOneTimePasscode')
     async createEmailOneTimePasscode(
@@ -157,7 +148,7 @@ export class UserController extends BaseController {
      * @param req express request
      * @param passcode the one-time passcode sent to the user's primary email
      */
-    @Middlewares([allowOauthAuthentication, isAuthenticated])
+    @Middlewares([isAuthenticated])
     @Get('/me/email/status')
     @OperationId('GetEmailVerificationStatus')
     async getEmailVerificationStatus(
@@ -181,11 +172,7 @@ export class UserController extends BaseController {
      * @summary List available organizations
      * @param req express request
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @Get('/me/allowedOrganizations')
     @OperationId('ListMyAvailableOrganizations')
     async getOrganizationsUserCanJoin(
@@ -209,7 +196,6 @@ export class UserController extends BaseController {
      * @param organizationUuid the uuid of the organization to join
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
@@ -246,7 +232,7 @@ export class UserController extends BaseController {
      * @summary Delete user
      * @param req express request
      */
-    @Middlewares([allowOauthAuthentication, isAuthenticated])
+    @Middlewares([isAuthenticated])
     @Delete('/me')
     @OperationId('DeleteMe')
     async deleteUser(
@@ -275,11 +261,7 @@ export class UserController extends BaseController {
      * Get user warehouse credentials
      * @summary List warehouse credentials
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @Get('/warehouseCredentials')
     @OperationId('getWarehouseCredentials')
     async getWarehouseCredentials(@Request() req: express.Request): Promise<{
@@ -299,11 +281,7 @@ export class UserController extends BaseController {
      * Create user warehouse credentials
      * @summary Create warehouse credentials
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @Post('/warehouseCredentials')
     @OperationId('createWarehouseCredentials')
     async createWarehouseCredentials(
@@ -326,11 +304,7 @@ export class UserController extends BaseController {
      * Update user warehouse credentials
      * @summary Update warehouse credentials
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @Patch('/warehouseCredentials/{uuid}')
     @OperationId('updateWarehouseCredentials')
     async updateWarehouseCredentials(
@@ -354,11 +328,7 @@ export class UserController extends BaseController {
      * Delete user warehouse credentials
      * @summary Delete warehouse credentials
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @Delete('/warehouseCredentials/{uuid}')
     @OperationId('deleteWarehouseCredentials')
     async deleteWarehouseCredentials(
@@ -400,7 +370,6 @@ export class UserController extends BaseController {
      * @summary List personal access tokens
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
@@ -427,7 +396,7 @@ export class UserController extends BaseController {
      */
     @Middlewares([
         // NOTE: We do NOT allow personal access tokens to be created with PAT authentication
-        allowOauthAuthentication, // Allow creating PAT from oauth app tokens
+        // Allow creating PAT from oauth app tokens
         unauthorisedInDemo,
     ])
     @SuccessResponse('200', 'Success')
@@ -457,11 +426,7 @@ export class UserController extends BaseController {
      * Delete personal access token
      * @summary Delete personal access token
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        isAuthenticated,
-        unauthorisedInDemo,
-    ])
+    @Middlewares([isAuthenticated, unauthorisedInDemo])
     @SuccessResponse('200', 'Success')
     @Delete('/me/personal-access-tokens/{personalAccessTokenUuid}')
     @OperationId('Delete personal access token')
@@ -484,7 +449,6 @@ export class UserController extends BaseController {
      * @summary Rotate personal access token
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
@@ -520,11 +484,7 @@ export class UserController extends BaseController {
      * Get account information
      * @summary Get account
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Get('/account')
     @OperationId('GetAccount')

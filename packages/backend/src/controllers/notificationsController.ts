@@ -20,11 +20,7 @@ import {
     Tags,
 } from '@tsoa/runtime';
 import express from 'express';
-import {
-    allowApiKeyAuthentication,
-    allowOauthAuthentication,
-    isAuthenticated,
-} from './authentication';
+import { allowApiKeyAuthentication, isAuthenticated } from './authentication';
 import { BaseController } from './baseController';
 
 @Route('/api/v1/notifications')
@@ -38,11 +34,7 @@ export class NotificationsController extends BaseController {
      * @query type the type of notification to get
      * @returns the notifications for a user
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Get('/')
     @OperationId('getNotifications')
@@ -67,11 +59,7 @@ export class NotificationsController extends BaseController {
      * @param req express request
      * @param notificationId the id of the notification
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Patch('{notificationId}')
     @OperationId('updateNotification')

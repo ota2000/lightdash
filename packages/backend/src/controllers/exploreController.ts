@@ -29,7 +29,6 @@ import express from 'express';
 import { deprecatedDownloadCsvRoute } from '../middlewares/deprecation';
 import {
     allowApiKeyAuthentication,
-    allowOauthAuthentication,
     isAuthenticated,
     unauthorisedInDemo,
 } from './authentication';
@@ -44,7 +43,6 @@ export class ExploreController extends BaseController {
      * @summary Set explores
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
@@ -72,11 +70,7 @@ export class ExploreController extends BaseController {
      * Get all explores for a project
      * @summary List explores
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Get('/')
     @OperationId('GetExplores')
@@ -105,11 +99,7 @@ export class ExploreController extends BaseController {
      * Get a specific explore
      * @summary Get explore
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Get('{exploreId}')
     @OperationId('GetExplore')
@@ -134,11 +124,7 @@ export class ExploreController extends BaseController {
      * Compile a metric query for an explore
      * @summary Compile query
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Post('{exploreId}/compileQuery')
     @OperationId('CompileQuery')
@@ -179,7 +165,6 @@ export class ExploreController extends BaseController {
      * @summary Download CSV from explore
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         deprecatedDownloadCsvRoute,

@@ -28,7 +28,6 @@ import {
 import express from 'express';
 import {
     allowApiKeyAuthentication,
-    allowOauthAuthentication,
     isAuthenticated,
     unauthorisedInDemo,
 } from './authentication';
@@ -42,11 +41,7 @@ export class GitFilesController extends BaseController {
      * List branches for the connected repository
      * @summary List branches
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Get('/branches')
     @OperationId('listGitBranches')
@@ -67,11 +62,7 @@ export class GitFilesController extends BaseController {
      * Get file content or directory listing. Returns directory entries if path is a directory, file content if path is a file.
      * @summary Get file or directory
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Get('/branches/{branch}/files')
     @OperationId('getGitFileOrDirectory')
@@ -95,7 +86,6 @@ export class GitFilesController extends BaseController {
      * @summary Save file
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
@@ -137,7 +127,6 @@ export class GitFilesController extends BaseController {
      * @summary Delete file
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
@@ -178,7 +167,6 @@ export class GitFilesController extends BaseController {
      * @summary Create branch
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
@@ -210,7 +198,6 @@ export class GitFilesController extends BaseController {
      * @summary Create pull request
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,

@@ -19,7 +19,6 @@ import {
 import express from 'express';
 import {
     allowApiKeyAuthentication,
-    allowOauthAuthentication,
     isAuthenticated,
 } from '../authentication/middlewares';
 import { BaseController } from '../baseController';
@@ -36,11 +35,7 @@ export class DashboardControllerV2 extends BaseController {
      * @param pageSize number of items per page
      * @param page page number
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Get('/schedulers')
     @OperationId('getDashboardSchedulers')

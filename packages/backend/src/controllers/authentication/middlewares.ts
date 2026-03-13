@@ -92,9 +92,9 @@ export const allowOauthAuthentication: RequestHandler = (req, res, next) => {
         });
 };
 /*
-This middleware is used to enable Api tokens and service accounts
-We first check service accounts (bearer header),
-then we check Personal access tokens (ApiKey header), which can throw an error if the token is invalid
+This middleware is used to enable Api tokens, OAuth bearer tokens, and service accounts.
+Auth chain: session → service account → OAuth bearer token → Personal access token (ApiKey header)
+Each step falls through gracefully if it doesn't match.
 */
 export const allowApiKeyAuthentication: RequestHandler = (req, res, next) => {
     if (req.isAuthenticated()) {
@@ -131,10 +131,52 @@ export const allowApiKeyAuthentication: RequestHandler = (req, res, next) => {
             },
         );
     };
+
+    const authenticateWithOauth = () => {
+        if (req.isAuthenticated()) {
+            next();
+            return;
+        }
+        const oauthReq = new OAuth2Server.Request(req);
+        const oauthRes = new OAuth2Server.Response(res);
+
+        req.services
+            .getOauthService()
+            .authenticate(oauthReq, oauthRes)
+            .then((token) => {
+                req.services
+                    .getUserService()
+                    .findSessionUser({
+                        id: token.user.userUuid,
+                        organization: token.user.organizationUuid,
+                    })
+                    .then((user) => {
+                        if (req.account?.isAuthenticated()) {
+                            Logger.warn(
+                                buildAccountExistsWarning('OAuth'),
+                                req.account?.authentication?.type,
+                            );
+                        }
+                        if (user) {
+                            req.account = fromOauth(user, token);
+                        }
+                        req.user = user;
+                        next();
+                    })
+                    .catch((userError) => {
+                        next(userError);
+                    });
+            })
+            .catch(() => {
+                // Not an OAuth token — fall through to PAT
+                authenticateWithPat();
+            });
+    };
+
     try {
-        authenticateServiceAccount(req, res, authenticateWithPat);
+        authenticateServiceAccount(req, res, authenticateWithOauth);
     } catch (e) {
-        authenticateWithPat();
+        authenticateWithOauth();
     }
 };
 

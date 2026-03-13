@@ -23,7 +23,6 @@ import {
 import express from 'express';
 import {
     allowApiKeyAuthentication,
-    allowOauthAuthentication,
     isAuthenticated,
     unauthorisedInDemo,
 } from '../authentication';
@@ -37,11 +36,7 @@ export class ParametersController extends BaseController {
      * Get a paginated list of project parameters with search and sorting capabilities.
      * @summary List project parameters
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Get('/list')
     @OperationId('getProjectParametersList')
@@ -82,11 +77,7 @@ export class ParametersController extends BaseController {
      * Get project parameters by names
      * @summary Get project parameters
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Get('/')
     @OperationId('getProjectParameters')
@@ -122,7 +113,6 @@ export class ParametersController extends BaseController {
      * @summary Replace project parameters
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,

@@ -19,7 +19,6 @@ import {
 import express from 'express';
 import {
     allowApiKeyAuthentication,
-    allowOauthAuthentication,
     isAuthenticated,
     unauthorisedInDemo,
 } from '../authentication';
@@ -33,11 +32,7 @@ export class ProjectDefaultsController extends BaseController {
      * Get project defaults configuration
      * @summary Get project defaults
      */
-    @Middlewares([
-        allowOauthAuthentication,
-        allowApiKeyAuthentication,
-        isAuthenticated,
-    ])
+    @Middlewares([allowApiKeyAuthentication, isAuthenticated])
     @SuccessResponse('200', 'Success')
     @Get('/')
     @OperationId('getProjectDefaults')
@@ -60,7 +55,6 @@ export class ProjectDefaultsController extends BaseController {
      * @summary Replace project defaults
      */
     @Middlewares([
-        allowOauthAuthentication,
         allowApiKeyAuthentication,
         isAuthenticated,
         unauthorisedInDemo,
