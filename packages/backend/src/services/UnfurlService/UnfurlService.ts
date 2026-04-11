@@ -848,14 +848,29 @@ export class UnfurlService extends BaseService {
                                       ...viewport,
                                       width: gridWidth ?? viewport.width,
                                   },
-                        extraHTTPHeaders: {
-                            [LightdashRequestMethodHeader]:
-                                RequestMethod.HEADLESS_BROWSER,
-                            'Lightdash-Headless-Browser-Context': context,
-                            'Lightdash-Headless-Browser-Context-Id': contextId
-                                ? contextId.toString()
-                                : 'undefined',
-                        },
+                    });
+
+                    // Scope custom headers to internal requests only to
+                    // prevent CORS preflight failures on external resources
+                    // (e.g. Google Fonts).
+                    const internalHost =
+                        this.lightdashConfig.headlessBrowser.internalLightdashHost.replace(
+                            /\/$/,
+                            '',
+                        );
+                    await page.route(`${internalHost}/**`, async (route) => {
+                        await route.continue({
+                            headers: {
+                                ...route.request().headers(),
+                                [LightdashRequestMethodHeader]:
+                                    RequestMethod.HEADLESS_BROWSER,
+                                'Lightdash-Headless-Browser-Context': context,
+                                'Lightdash-Headless-Browser-Context-Id':
+                                    contextId
+                                        ? contextId.toString()
+                                        : 'undefined',
+                            },
+                        });
                     });
 
                     // Polyfill crypto.randomUUID (needed for Loom iframes)
