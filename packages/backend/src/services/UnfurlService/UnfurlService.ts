@@ -64,7 +64,6 @@ import { getAuthenticationToken } from '../../routers/headlessBrowser';
 import { BaseService } from '../BaseService';
 import type { SpacePermissionService } from '../SpaceService/SpacePermissionService';
 
-const RESPONSE_TIMEOUT_MS = 180000;
 const uuid = '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}';
 const uuidRegex = new RegExp(uuid, 'g');
 const nanoid = '[\\w-]{21}';
@@ -1144,7 +1143,10 @@ export class UnfurlService extends BaseService {
                                             `#loom-loaded-${id}`,
                                             {
                                                 state: 'attached',
-                                                timeout: RESPONSE_TIMEOUT_MS,
+                                                timeout:
+                                                    this.lightdashConfig
+                                                        .headlessBrowser
+                                                        .responseTimeoutMs,
                                             },
                                         ),
                                 );
@@ -1244,7 +1246,9 @@ export class UnfurlService extends BaseService {
                         SCREENSHOT_SELECTORS.READY_INDICATOR,
                         {
                             state: 'attached',
-                            timeout: RESPONSE_TIMEOUT_MS,
+                            timeout:
+                                this.lightdashConfig.headlessBrowser
+                                    .responseTimeoutMs,
                         },
                     );
                     this.logger.info(
@@ -1303,7 +1307,9 @@ export class UnfurlService extends BaseService {
 
                     const fullPage = await page.locator(finalSelector);
                     const fullPageSize = await fullPage?.boundingBox({
-                        timeout: RESPONSE_TIMEOUT_MS,
+                        timeout:
+                            this.lightdashConfig.headlessBrowser
+                                .responseTimeoutMs,
                     });
 
                     if (
@@ -1390,7 +1396,9 @@ export class UnfurlService extends BaseService {
                             .screenshot({
                                 path,
                                 animations: 'disabled',
-                                timeout: RESPONSE_TIMEOUT_MS,
+                                timeout:
+                                    this.lightdashConfig.headlessBrowser
+                                        .responseTimeoutMs,
                             });
                     } else {
                         // Full page screenshot for charts

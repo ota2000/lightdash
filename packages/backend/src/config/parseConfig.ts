@@ -1314,6 +1314,7 @@ export type HeadlessBrowserConfig = {
     browserEndpoint: string;
     maxScreenshotRetries: number;
     retryBaseDelayMs: number;
+    responseTimeoutMs: number;
 };
 export type S3Config = {
     region: string;
@@ -2012,6 +2013,10 @@ export const parseConfig = (): LightdashConfig => {
                 process.env.HEADLESS_BROWSER_RETRY_BASE_DELAY_MS || '3000',
                 10,
             ),
+            responseTimeoutMs:
+                getIntegerFromEnvironmentVariable(
+                    'HEADLESS_BROWSER_RESPONSE_TIMEOUT_MS',
+                ) ?? 180000,
         },
         s3: parseBaseS3Config(),
         results: {
